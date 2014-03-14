@@ -26,7 +26,9 @@ alert("YIP");
           pushNotification.register(
             function(result) { alert('Callback Success! Result = '+result)}, 
             function(error) { alert('Error = '+error)},
-            {"senderID":"507474617924","ecb":"PushService.onNotificationGCM"}
+            {"senderID":"507474617924","ecb": function(e) {
+              alert("SMEG", e)
+            }}
           );
         } else {
           //IOS
