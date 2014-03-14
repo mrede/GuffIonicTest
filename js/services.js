@@ -19,6 +19,14 @@ angular.module('starter.services', [])
   if (window.plugins) {
     pushNotification = window.plugins.pushNotification;
   } 
+
+  function fail_bounce(e)
+{
+  console.log("Fail_bounce called");
+  var yourService = angular.injector(['starter.services']).get('PushService');
+  yourService.onNotificationGCM(e);
+}
+
   
   if (pushNotification) {
 
@@ -195,9 +203,3 @@ angular.module('starter.services', [])
   }
 });
 
-function fail_bounce(e)
-{
-  console.log("Fail_bounce called");
-  var yourService = angular.injector(['starter.services']).get('PushService');
-  yourService.onNotificationGCM(e);
-}
