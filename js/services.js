@@ -15,6 +15,12 @@ angular.module('starter.services', [])
   
   if (pushNotification) {
 
+    function fail_bounce(e)
+{
+  console("222Fail_bounce called");
+  var yourService = $injector.get('PushService');
+  yourService.onNotificationGCM(e);
+}
 
     var app = {
       token_id: null,
@@ -179,9 +185,4 @@ angular.module('starter.services', [])
   }
 });
 
-function fail_bounce(e)
-{
-  console("Fail_bounce called");
-  var yourService = $injector.get('PushService');
-  yourService.onNotificationGCM(e);
-}
+
