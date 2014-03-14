@@ -5,10 +5,8 @@ angular.module('starter.services', [])
  */
  .factory('PushService', function() {
 
-alert("YIP");
+  alert("YIP");
 
-  
-  
   var pushNotification = false;
   alert("window.plugins: "+window.plugins)
   if (window.plugins) {
@@ -16,40 +14,41 @@ alert("YIP");
   } 
   
   if (pushNotification) {
-    console.log("Returning push");
-    return {
-      register: function() {
 
-        if ( device.platform == 'android' || device.platform == 'Android' )
-        {
-          console.log("Registering Android");
-          pushNotification.register(
-            function(result) { alert('Callback Success! Result = '+result)}, 
-            function(error) { alert('Error = '+error)},
-            {"senderID":"507474617924","ecb": function(e) {
-              alert("SMEG", e)
-            }}
-          );
-        } else {
-          //IOS
-          alert("Registering iOS");
-          pushNotification.register(
-          app.pushRegisterSuccessIosHandler,
-          app.pushRegisterErrorIosHandler, {
-              "badge":"true",
-              "sound":"true",
-              "alert":"true",
-              "ecb":"app.onNotificationAPN"
-            });
-        }
+
+    var app = {
+      token_id: null,
+      
+      // Update DOM on a Received Event
+      register: function(id) {
+
+          var pushNotification = window.plugins.pushNotification;
+
+          if ( device.platform == 'android' || device.platform == 'Android' )
+          {
+              alert("ANDROID");
+              pushNotification.register(app.pushRegisterSuccessHandler, app.pushRegisterErrorHandler,{"senderID":"507474617924","ecb":"app.onNotificationGCM"});
+          } else {
+              //IOS
+              alert("Doing IOS");
+              pushNotification.register(
+              app.pushRegisterSuccessIosHandler,
+              app.pushRegisterErrorIosHandler, {
+                  "badge":"true",
+                  "sound":"true",
+                  "alert":"true",
+                  "ecb":"app.onNotificationAPN"
+              });
+
+          }
       },
 
       pushRegisterSuccessHandler: function(result) {
-        
+          //alert('Callback Success! Result = '+result)
       },
 
       pushRegisterErrorHandler: function(error) {
-        alert('Error = '+error)
+          alert('Error = '+error)
       },
 
       onNotificationGCM: function(e) {
@@ -96,16 +95,67 @@ alert("YIP");
             error: function(xhr, type){ alert("Error sending Reg"+xhr+", "+type)}
           });
       },
-    }
-  } else {
-    console.log("Returning Dummy");
 
-    return {
-      register: function() {
-        console.log("Dummy registration");
+      registerSuccessHandler: function(e) {
+          console.log("REgister success");
+      },
+
+      pushRegisterSuccessIosHandler: function(result) {
+          //alert('IOS Callback Success! Result = '+result)
+          app.token_id = result;
+          app.sendRegistration(result, 'ios');
+      },
+
+      pushRegisterErrorIosHandler: function(error) {
+          alert('IOS Callback Error! Error = '+error)
+      },
+
+      onNotificationAPN: function(event) {
+          if ( event.alert )
+          {
+              alert(event.alert);
+              navigator.notification.alert(event.alert);
+          }
+
+          if ( event.sound )
+          {
+              var snd = new Media(event.sound);
+              snd.play();
+          }
+
+          if ( event.badge )
+          {
+              pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
+          }
       }
-    }
+
+    };
+
+    return app;
+  } else {
+    return { register: function() { console.log("DUMMY")}};
   }
+
+
+
+  // var pushNotification = false;
+  // alert("window.plugins: "+window.plugins)
+  // if (window.plugins) {
+  //   pushNotification = window.plugins.pushNotification;
+  // } 
+  
+  // if (pushNotification) {
+  //   console.log("Returning push");
+  //   return 
+  // } else {
+  //   console.log("Returning Dummy");
+
+  //   return {
+  //     register: function() {
+  //       console.log("Dummy registration");
+  //     }
+  //   }
+  // }
 })
 .factory('PetService', function() {
   // Might use a resource here that returns a JSON array
