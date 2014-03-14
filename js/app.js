@@ -79,7 +79,7 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
 
 function fail_bounce(e)
 {
-  console("Fail_bounce called");
+  console.log("Fail_bounce called");
   var yourService = $injector.get('PushService');
   yourService.onNotificationGCM(e);
 }
