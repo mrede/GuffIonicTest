@@ -6,13 +6,7 @@ angular.module('starter.services', [])
  .factory('PushService', function($http) {
 
   alert("YIP");
-  $http({method: 'GET', url: 'http://dev.guff.me.uk/register/android.json?token=123',}).
-          success(function(data, status, headers, config) {
-            console.log("REgister success");
-          }).
-          error(function(data, status, headers, config) {
-            console.log("ERROR registering")
-          });
+  
 
   var pushNotification = false;
   alert("window.plugins: "+window.plugins)
@@ -26,6 +20,37 @@ angular.module('starter.services', [])
   var yourService = angular.injector(['starter.services']).get('PushService');
   yourService.onNotificationGCM(e);
 }
+
+  function onNotificationGCM(e) {
+          console.log("GCM", e);
+          switch( e.event )
+          {
+              case 'registered':
+                  if ( e.regid.length > 0 )
+                  {
+                      console.log("Regid " + e.regid);
+                      
+                      
+                      //alert('registration id = '+e.regid);
+                      app.token_id = e.regid;
+                      app.sendRegistration(e.regid, 'android')
+                  }
+              break;
+   
+              case 'message':
+                // this is the actual push notification. its format depends on the data model from the push server
+                alert('message = '+e.message+' msgcnt = '+e.msgcnt);
+              break;
+   
+              case 'error':
+                alert('GCM error = '+e.msg);
+              break;
+   
+              default:
+                alert('An unknown GCM event has occurred');
+                break;
+          }
+      }
 
   
   if (pushNotification) {
@@ -43,7 +68,7 @@ angular.module('starter.services', [])
           if ( device.platform == 'android' || device.platform == 'Android' )
           {
               alert("ANDROID");
-              pushNotification.register(app.pushRegisterSuccessHandler, app.pushRegisterErrorHandler,{"senderID":"507474617924","ecb":"fail_bounce"});
+              pushNotification.register(app.pushRegisterSuccessHandler, app.pushRegisterErrorHandler,{"senderID":"507474617924","ecb":"onNotificationGCM"});
           } else {
               //IOS
               alert("Doing IOS");
