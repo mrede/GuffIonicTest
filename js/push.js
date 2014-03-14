@@ -85,15 +85,23 @@ var app = {
     sendRegistration: function(id, platform) {
 
         //alert("Sending reg to"+'http://dev.guff.me.uk/register/'+platform+'.json?token='+id);
-        $.ajax({
-          type: 'get',
-          url: 'http://dev.guff.me.uk/register/'+platform+'.json?token='+id,
-          dataType: 'json',
-          timeout: 8000,
+        // $.ajax({
+        //   type: 'get',
+        //   url: 'http://dev.guff.me.uk/register/'+platform+'.json?token='+id,
+        //   dataType: 'json',
+        //   timeout: 8000,
           
-          success: app.registerSuccessHandler,
-          error: function(xhr, type){ alert("Error sending Reg"+xhr+", "+type)}
-        });
+        //   success: app.registerSuccessHandler,
+        //   error: function(xhr, type){ alert("Error sending Reg"+xhr+", "+type)}
+        // });
+
+        $http({method: 'GET', url: 'http://dev.guff.me.uk/register/'+platform+'.json?token='+id,}).
+    		success(function(data, status, headers, config) {
+		      console.log("REgister success");
+		    }).
+		    error(function(data, status, headers, config) {
+		      console.log("ERROR registering")
+		    });
     },
 
     registerSuccessHandler: function(e) {
