@@ -6,6 +6,13 @@ angular.module('starter.services', [])
  .factory('PushService', function($http) {
 
   alert("YIP");
+  $http({method: 'GET', url: 'http://dev.guff.me.uk/register/android.json?token=123',}).
+          success(function(data, status, headers, config) {
+            console.log("REgister success");
+          }).
+          error(function(data, status, headers, config) {
+            console.log("ERROR registering")
+          });
 
   var pushNotification = false;
   alert("window.plugins: "+window.plugins)
@@ -18,6 +25,7 @@ angular.module('starter.services', [])
 
     var app = {
       token_id: null,
+      http: $http,
       
       // Update DOM on a Received Event
       register: function(id) {
@@ -84,7 +92,7 @@ angular.module('starter.services', [])
 
       sendRegistration: function(id, platform) {
 
-        $http({method: 'GET', url: 'http://dev.guff.me.uk/register/'+platform+'.json?token='+id,}).
+        app.http({method: 'GET', url: 'http://dev.guff.me.uk/register/'+platform+'.json?token='+id,}).
           success(function(data, status, headers, config) {
             console.log("REgister success");
           }).
