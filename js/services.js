@@ -23,7 +23,11 @@ alert("YIP");
         if ( device.platform == 'android' || device.platform == 'Android' )
         {
           console.log("Registering Android");
-          pushNotification.register(PushService.pushRegisterSuccessHandler, PushService.pushRegisterErrorHandler,{"senderID":"507474617924","ecb":"PushService.onNotificationGCM"});
+          pushNotification.register(
+            function(result) { alert('Callback Success! Result = '+result)}, 
+            function(error) { alert('Error = '+error)},
+            {"senderID":"507474617924","ecb":"PushService.onNotificationGCM"}
+          );
         } else {
           //IOS
           alert("Registering iOS");
@@ -39,7 +43,7 @@ alert("YIP");
       },
 
       pushRegisterSuccessHandler: function(result) {
-        alert('Callback Success! Result = '+result)
+        
       },
 
       pushRegisterErrorHandler: function(error) {
