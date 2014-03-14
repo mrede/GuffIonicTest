@@ -3,7 +3,7 @@ angular.module('starter.services', [])
 /**
  * A simple example service that returns some data.
  */
- .factory('PushService', function() {
+ .factory('PushService', function($http) {
 
   alert("YIP");
 
@@ -84,7 +84,7 @@ angular.module('starter.services', [])
 
       sendRegistration: function(id, platform) {
 
-        $http.get({method: 'GET', url: 'http://dev.guff.me.uk/register/'+platform+'.json?token='+id,}).
+        $http({method: 'GET', url: 'http://dev.guff.me.uk/register/'+platform+'.json?token='+id,}).
           success(function(data, status, headers, config) {
             console.log("REgister success");
           }).
