@@ -84,7 +84,7 @@ angular.module('starter.services', [])
 
       sendRegistration: function(id, platform) {
 
-        $http({method: 'GET', url: 'http://dev.guff.me.uk/register/'+platform+'.json?token='+id,}).
+        $http.get({method: 'GET', url: 'http://dev.guff.me.uk/register/'+platform+'.json?token='+id,}).
           success(function(data, status, headers, config) {
             console.log("REgister success");
           }).
