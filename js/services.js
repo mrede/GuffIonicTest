@@ -181,7 +181,7 @@ angular.module('starter.services', [])
 
 function fail_bounce(e)
 {
-  console("Fail_bounce called");
-  var yourService = angular.injector.get('PushService');
+  console.log("Fail_bounce called");
+  var yourService = angular.injector(['starter.services']).get('PushService');
   yourService.onNotificationGCM(e);
 }
