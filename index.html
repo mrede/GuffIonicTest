@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="starter" >
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
@@ -27,18 +27,12 @@
   <!-- 
     'starter' is the name of this angular module (js/app.js)
   -->
-  <body ng-app="starter" animation="slide-left-right-ios7">
+  <body ng-controller="AppCtrl" animation="slide-left-right-ios7">
 
-    <!-- 
-      The nav bar that will be updated as we navigate between views
-      Additional attributes set its look, ion-nav-bar animation and icons
-      Icons provided by Ionicons: http://ionicons.com/ 
-    -->
-    <ion-nav-bar type="bar-positive" 
-             animation="nav-title-slide-ios7" 
-             back-button-type="button-icon button-clear" 
-             back-button-icon="ion-ios7-arrow-back"></ion-nav-bar>
+    
+    
 
+   
     <!-- 
       The views will be rendered in the <ion-nav-view> directive below
       Templates are in the /templates folder (but you could also

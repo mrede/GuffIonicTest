@@ -1,12 +1,11 @@
 angular.module('starter.controllers', [])
 
-
 // A simple controller that fetches a list of data from a service
-.controller('PetIndexCtrl', function($scope, PetService, $ionicModal) {
+.controller('AppCtrl', function($scope, PetService, $ionicModal) {
   // "Pets" is a service returning mock data (services.js)
   $scope.pets = PetService.all();
 
-  $ionicModal.fromTemplateUrl('modal.html', function(modal) {
+  $ionicModal.fromTemplateUrl('templates/modal.html', function(modal) {
     $scope.modal = modal;
   }, {
     animation: 'slide-in-up',
@@ -14,6 +13,8 @@ angular.module('starter.controllers', [])
   });
 
 })
+
+
 
 
 // A simple controller that fetches a list of data from a service
@@ -39,16 +40,7 @@ angular.module('starter.controllers', [])
         PushService.onNotificationGCM($http, e)    
     }
 
-    console.log("MODEL:", $ionicModal)
-    $ionicModal.fromTemplateUrl('templates/modal.html', 
-      function(modal) {
-        console.log("PING", modal)
-        $scope.modal = modal;
-      }, {
-        animation: 'slide-in-up',
-        focusFirstInput: true
-      }
-    );
+    
   
 })
 
