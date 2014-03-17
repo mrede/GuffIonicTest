@@ -17,7 +17,7 @@ angular.module('starter.services', [])
   
 
   
-  if (true) { //pushNotification) {
+  if (pushNotification) {
 
 
     var app = {
