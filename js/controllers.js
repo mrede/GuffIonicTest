@@ -22,7 +22,7 @@ angular.module('starter.controllers', [])
 
   if (!push_token) {
   	console.log("Calling register")
-  	//PushService.register();
+  	PushService.register();
   }
 
   $scope.cheeseTest= function(e) {
