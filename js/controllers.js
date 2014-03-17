@@ -1,10 +1,8 @@
 angular.module('starter.controllers', [])
 
 // A simple controller that fetches a list of data from a service
-.controller('AppCtrl', function($scope, PetService, $ionicModal) {
-  // "Pets" is a service returning mock data (services.js)
-  $scope.pets = PetService.all();
-
+.controller('AppCtrl', function($scope, $ionicModal) {
+  
   $ionicModal.fromTemplateUrl('templates/modal.html', function(modal) {
     $scope.modal = modal;
   }, {
@@ -57,8 +55,3 @@ angular.module('starter.controllers', [])
 })
 
 
-// A simple controller that shows a tapped item's data
-.controller('PetDetailCtrl', function($scope, $stateParams, PetService) {
-  // "Pets" is a service returning mock data (services.js)
-  $scope.pet = PetService.get($stateParams.petId);
-});
