@@ -3,7 +3,7 @@ angular.module('starter.services', [])
 /**
  * A simple example service that returns some data.
  */
- .factory('PushService', function($http) {
+ .factory('PushService', function() {
 
   alert("YIP");
   
@@ -14,51 +14,15 @@ angular.module('starter.services', [])
     pushNotification = window.plugins.pushNotification;
   } 
 
-  function fail_bounce(e)
-{
-  console.log("Fail_bounce called");
-  var yourService = angular.injector(['starter.services']).get('PushService');
-  yourService.onNotificationGCM(e);
-}
-
-  function onNotificationGCM(e) {
-          console.log("GCM", e);
-          switch( e.event )
-          {
-              case 'registered':
-                  if ( e.regid.length > 0 )
-                  {
-                      console.log("Regid " + e.regid);
-                      
-                      
-                      //alert('registration id = '+e.regid);
-                      app.token_id = e.regid;
-                      app.sendRegistration(e.regid, 'android')
-                  }
-              break;
-   
-              case 'message':
-                // this is the actual push notification. its format depends on the data model from the push server
-                alert('message = '+e.message+' msgcnt = '+e.msgcnt);
-              break;
-   
-              case 'error':
-                alert('GCM error = '+e.msg);
-              break;
-   
-              default:
-                alert('An unknown GCM event has occurred');
-                break;
-          }
-      }
+  
 
   
-  if (pushNotification) {
+  if (true) { //pushNotification) {
 
 
     var app = {
       token_id: null,
-      http: $http,
+      http: null,
       
       // Update DOM on a Received Event
       register: function(id) {
@@ -68,7 +32,7 @@ angular.module('starter.services', [])
           if ( device.platform == 'android' || device.platform == 'Android' )
           {
               alert("ANDROID");
-              pushNotification.register(app.pushRegisterSuccessHandler, app.pushRegisterErrorHandler,{"senderID":"507474617924","ecb":"onNotificationGCM"});
+              pushNotification.register(app.pushRegisterSuccessHandler, app.pushRegisterErrorHandler,{"senderID":"507474617924","ecb":"PushService.onNotificationGCM"});
           } else {
               //IOS
               alert("Doing IOS");
@@ -92,8 +56,9 @@ angular.module('starter.services', [])
           alert('Error = '+error)
       },
 
-      onNotificationGCM: function(e) {
-          console.log("GCM", e);
+      onNotificationGCM: function($http, e) {
+          this.http = $http;
+          console.log("GCM", e, this.http);
           switch( e.event )
           {
               case 'registered':
@@ -182,7 +147,13 @@ angular.module('starter.services', [])
 
     return app;
   } else {
-    return { register: function() { console.log("DUMMY")}};
+    return { 
+      register: function() { console.log("DUMMY")},
+      sendRegistration: function(id, platform) {
+
+      },
+
+    };
   }
 
 
@@ -228,3 +199,11 @@ angular.module('starter.services', [])
   }
 });
 
+
+function fail_bounce(e)
+{
+  console.log("Fail_bounce called");
+  //# Get The PushTest controller and call the test on it
+  angular.element(document.querySelector("#CHEESE")).scope().cheeseTest(e);
+
+}

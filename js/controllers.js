@@ -9,9 +9,9 @@ angular.module('starter.controllers', [])
 
 
 // A simple controller that fetches a list of data from a service
-.controller('LocationCtrl', function($scope, PushService) {
+.controller('LocationCtrl', function($scope, $http, PushService) {
   // "Pets" is a service returning mock data (services.js)
-  alert("LocationCtrl");
+  console.log("LocationCtrl");
 
   var storage = window.localStorage;
   var push_token = false;
@@ -22,10 +22,14 @@ angular.module('starter.controllers', [])
 
   if (!push_token) {
   	console.log("Calling register")
-  	PushService.register();
+  	//PushService.register();
   }
 
+  $scope.cheeseTest= function(e) {
+        console.log("POOOOOOT from cheese Test", $http, "E: ",e)  
 
+        PushService.onNotificationGCM($http, e)    
+    }
 
   
 })
